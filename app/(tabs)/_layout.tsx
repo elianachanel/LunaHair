@@ -1,59 +1,81 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Tabs } from "expo-router";
+import { View, Pressable } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
+import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+function LunaTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+  const icons: Record<string, keyof typeof Ionicons.glyphMap> = {
+    index: "moon",
+    calendar: "calendar-outline",
+    rituals: "sparkles-outline",
+    profile: "person-outline",
+  };
+  const labels: Record<string, string> = {
+    index: "Inicio",
+    calendar: "Calendario",
+    rituals: "Rutina",
+    profile: "Perfil",
+  };
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return (
+    <BlurView
+      intensity={40}
+      tint="dark"
+      className="absolute bottom-0 left-0 right-0 border-t border-white/10"
+    >
+      <View className="flex-row items-center justify-around px-2 pb-8 pt-3">
+        {state.routes.map((route, index) => {
+          const focused = state.index === index;
+          const onPress = () => {
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true,
+            });
+            if (!focused && !event.defaultPrevented) {
+              navigation.navigate(route.name);
+            }
+          };
+          return (
+            <Pressable
+              key={route.key}
+              onPress={onPress}
+              className={`items-center rounded-2xl px-4 py-2 ${
+                focused ? "bg-violet-500/25" : ""
+              }`}
+            >
+              <Ionicons
+                name={icons[route.name] ?? "ellipse"}
+                size={22}
+                color={focused ? "#C4B5FD" : "#6B7280"}
+              />
+              <View>
+                {/* label via accessibility */}
+              </View>
+              {focused ? (
+                <View className="mt-1 h-0.5 w-4 rounded-full bg-violet-400" />
+              ) : (
+                <View className="mt-1 h-0.5 w-4" />
+              )}
+            </Pressable>
+          );
+        })}
+      </View>
+    </BlurView>
+  );
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
+      tabBar={(props) => <LunaTabBar {...props} />}
+      screenOptions={{ headerShown: false }}
+    >
+      <Tabs.Screen name="index" options={{ title: "Inicio" }} />
+      <Tabs.Screen name="calendar" options={{ title: "Calendario" }} />
+      <Tabs.Screen name="rituals" options={{ title: "Rutina" }} />
+      <Tabs.Screen name="profile" options={{ title: "Perfil" }} />
     </Tabs>
   );
 }

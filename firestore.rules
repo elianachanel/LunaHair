@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // ID del log: {userId}_{fecha}
+    function isOwnHairLogId(logId) {
+      return logId.matches('^' + request.auth.uid + '_.*');
+    }
+
+    match /users/{userId} {
+      allow read, create, update: if isOwner(userId);
+      allow delete: if isOwner(userId);
+    }
+
+    match /routines/{routineId} {
+      allow read: if isSignedIn()
+        && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isSignedIn()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    match /hairCareLogs/{logId} {
+      allow read: if isSignedIn() && isOwnHairLogId(logId);
+      allow create: if isSignedIn()
+        && isOwnHairLogId(logId)
+        && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isSignedIn()
+        && isOwnHairLogId(logId)
+        && resource.data.userId == request.auth.uid;
+    }
+
+    match /lunarHistory/{entryId} {
+      allow read: if isSignedIn()
+        && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isSignedIn()
+        && resource.data.userId == request.auth.uid;
+    }
+  }
+}
