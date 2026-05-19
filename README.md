@@ -1,14 +1,24 @@
 # LunaHair
 
 <p align="center">
-  <img src="assets/images/icon.png" width="96" alt="LunaHair icon" />
+  <img src="assets/images/icon.png" width="128" alt="LunaHair app icon — purple crescent moon" style="border-radius: 28px;" />
+</p>
+
+<p align="center">
+  <strong>Lunar hair care</strong> · synced with real moon phases
+</p>
+
+<p align="center">
+  <a href="https://github.com/elianachanel/LunaHair">github.com/elianachanel/LunaHair</a>
 </p>
 
 ---
 
 ## English
 
-Mobile hair-care app synced with **astronomical moon phases**. Plan rituals by the moon, log your daily routine, and get recommendations tailored to your hair type.
+**LunaHair** is a mobile hair-care app synced with **astronomical moon phases**. Plan rituals by the moon, log your daily routine, and get recommendations tailored to your hair type.
+
+The app icon is a **purple crescent moon** on a night-sky background (`#07050D`), matching the in-app palette (lavender `#C4B5FD`, violet `#8B5CF6`).
 
 ### Features
 
@@ -76,30 +86,12 @@ After changing `.env`, restart with a clean cache:
 npx expo start --clear
 ```
 
-### Publish to GitHub
+### Repository
 
-The project may already have local commits. To publish:
-
-#### 1. Create an empty repo on GitHub
-
-1. [github.com/new](https://github.com/new)
-2. Name: `LunaHair`
-3. **Do not** add README, `.gitignore`, or license (they already exist locally)
-4. Create the repository
-
-#### 2. Connect and push
+Source code: **[github.com/elianachanel/LunaHair](https://github.com/elianachanel/LunaHair)**
 
 ```bash
-git remote add origin https://github.com/elianachanel/LunaHair.git
-git branch -M main
-git push -u origin main
-```
-
-#### Alternative with GitHub CLI
-
-```bash
-gh auth login
-gh repo create LunaHair --private --source=. --remote=origin --push
+git clone https://github.com/elianachanel/LunaHair.git
 ```
 
 ### Project structure
@@ -119,7 +111,9 @@ LunaHair/
 │   ├── hooks/
 │   ├── constants/
 │   └── types/
-├── assets/onboarding/      # Stepper illustrations
+├── assets/
+│   ├── images/             # App icon, splash, favicon (crescent moon branding)
+│   └── onboarding/       # Hair-type stepper illustrations
 ├── firestore.rules         # Firestore security rules
 ├── FIREBASE.md             # Firebase setup (step by step)
 ├── PUBLICAR.md             # Publish with EAS / stores (Spanish)
@@ -169,7 +163,9 @@ Eliana Batista
 
 ## Español
 
-App móvil de cuidado capilar sincronizada con **fases lunares astronómicas**. Planifica rituales según la luna, registra tu rutina diaria y personaliza recomendaciones según tu tipo de cabello.
+**LunaHair** es una app móvil de cuidado capilar sincronizada con **fases lunares astronómicas**. Planifica rituales según la luna, registra tu rutina diaria y personaliza recomendaciones según tu tipo de cabello.
+
+El icono de la app es una **media luna morada** sobre fondo nocturno (`#07050D`), alineada con la paleta de la interfaz (lavanda `#C4B5FD`, violeta `#8B5CF6`).
 
 ### Características
 
@@ -237,30 +233,12 @@ Si cambias `.env`, reinicia con caché limpia:
 npx expo start --clear
 ```
 
-### Crear el repositorio en GitHub
+### Repositorio
 
-El proyecto ya puede tener commits locales. Para publicarlo:
-
-#### 1. Crear repo vacío en GitHub
-
-1. [github.com/new](https://github.com/new)
-2. Nombre: `LunaHair`
-3. **No** añadas README, `.gitignore` ni licencia (ya existen en el repo local)
-4. Crear repositorio
-
-#### 2. Conectar y subir
+Código fuente: **[github.com/elianachanel/LunaHair](https://github.com/elianachanel/LunaHair)**
 
 ```bash
-git remote add origin https://github.com/elianachanel/LunaHair.git
-git branch -M main
-git push -u origin main
-```
-
-#### Alternativa con GitHub CLI
-
-```bash
-gh auth login
-gh repo create LunaHair --private --source=. --remote=origin --push
+git clone https://github.com/elianachanel/LunaHair.git
 ```
 
 ### Estructura del proyecto
@@ -280,7 +258,9 @@ LunaHair/
 │   ├── hooks/
 │   ├── constants/
 │   └── types/
-├── assets/onboarding/      # Ilustraciones del stepper
+├── assets/
+│   ├── images/             # Icono, splash y favicon (media luna morada)
+│   └── onboarding/       # Ilustraciones del stepper de cabello
 ├── firestore.rules         # Reglas de seguridad Firestore
 ├── FIREBASE.md             # Configuración Firebase paso a paso
 ├── PUBLICAR.md             # Publicar con EAS / tiendas
